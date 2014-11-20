@@ -1,5 +1,5 @@
 SpamCop.net - Automatic approval of SpamCop.net spam reports v2.6 (2014-10-15)
-Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
+- Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 
 
 README
@@ -44,7 +44,8 @@ USAGE
 If the properly you gave the right to perform the script, and you have entered your login details now just run this script if there are any reports awaiting confirmation of their approval will start if it does not find anything to approve the script exits with an appropriate message.
 
 NOTE!
-Service Spamcop needs some time to process requests sent him spam, so each time you sent them you need to wait a few seconds, otherwise the script will be argued that there are no reports for approval.
+- If you run a script when an error occurs on an HTTPS connection, you must install on your system packages "libssl-dev" and "liblwp-protocol-https-perl",
+- Service Spamcop needs some time to process requests sent him spam, so each time you sent them you need to wait a few seconds, otherwise the script will be argued that there are no reports for approval.
 
 
 CHANGELOG
