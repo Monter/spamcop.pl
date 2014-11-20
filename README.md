@@ -7,7 +7,8 @@ README
 
 spamcop.pl script was created because of not finding the Internet a suitable tool for wholesale approval of the report on Spamcop.net after submitting applications containing Spam, or possibly solutions found were too old/date/too big, etc).
 
-The script for the action requires the Perl WWW::Mechanize extension of the Perl. Was tested on Perl version 5.10.1 and 5.14.2.
+The script for the action requires the WWW::Mechanize extension of the Perl.
+Was tested on Perl version 5.10.1 and 5.14.2.
 
 Action script in a nutshell replaces the user and the browser simulating the appropriate action on the Web sites visited by reading the content of these pages and clicking the appropriate buttons.
 
