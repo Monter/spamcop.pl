@@ -35,7 +35,7 @@ The script requires the Perl environment to work with the module WWW:Mechanize. 
 - give him the right to do (chmod + x)
 - Edit the script and in the right places to give your username and password to the Spamcop.net site.
  
-To use the script, you must have a user account on the site and send e-mails Spamcop.net qualified by Cieie as Spam in the form of attachments to the given Spamcop your individual email address.
+To use the script, you must have a user account on the site and send e-mails Spamcop.net qualified by you as Spam in the form of attachments to the given Spamcop your individual email address.
 
 
 USAGE
