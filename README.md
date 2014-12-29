@@ -1,4 +1,4 @@
-SpamCop.net - Automatic approval of SpamCop.net spam reports v2.6 (2014-10-15)
+SpamCop.net - Automatic approval of SpamCop.net spam reports v2.7 (2014-12-29)
 - Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 
 
@@ -54,6 +54,7 @@ NOTE!
 CHANGELOG
 =========
 
+- v2.7 - added debugging option (the write report on disk) and other minor improvements
 - v2.6 - added a new section that detects message "No body text provided, check format of submission" which makes it impossible to send a report, because submitted spam does not contain BODY section.
 - v2.5 - added a new section that detects message "Sorry, this email is too old to file a spam report" which makes it impossible to send a report, because You must report spam within 2 days of receipt.
 - v2.4 - added a new section that detects message "Reports regarding this spam have already been sent" which makes it impossible to send a report, because the report of the spam has been sent (spam is old).
