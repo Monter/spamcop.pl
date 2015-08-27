@@ -63,7 +63,7 @@ if (defined $foundLink) {
       if ($mech->content =~ /resolved.this.issue/) {
         print "## ISP resolved this issue, no report needed. Skipping... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /Mailhost.configuration.problem/) {
-        print "## Mailhost configuration problem. Register every email address where you receive spam. See: ".$mech->uri()."\n";        
+        print "## Mailhost configuration problem. Register every email address where you receive spam. See: ".$mech->uri()."\n";
       } elsif ($mech->content =~ /No.source.IP.address.found/) {
         print "## No source IP address found, cannot proceed. Ignored... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /spam.have.already.been.sent/) {
