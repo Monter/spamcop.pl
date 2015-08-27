@@ -1,4 +1,4 @@
-SpamCop.net - Automatic approval of SpamCop.net spam reports v2.8 (2015-01-04)
+SpamCop.net - Automatic approval of SpamCop.net spam reports v3.0 (2015-08-27)
 - Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 
 
@@ -8,7 +8,7 @@ README
 spamcop.pl script was created because of not finding the Internet a suitable tool for wholesale approval of the report on Spamcop.net after submitting applications containing Spam, or possibly solutions found were too old/date/too big, etc).
 
 The script for the action requires the WWW::Mechanize extension of the Perl.
-Was tested on Perl version 5.10.1 and 5.14.2.
+Was tested on Perl version 5.10.1, 5.14.2 and 5.20.2
 
 Action script in a nutshell replaces the user and the browser simulating the appropriate action on the Web sites visited by reading the content of these pages and clicking the appropriate buttons.
 
@@ -54,6 +54,7 @@ NOTE!
 CHANGELOG
 =========
 
+- v3.0 - changing the mode of action in the event of an "possible forgery" error - change the alert from an error to a warning that allows you to continue script working
 - v2.9 - added a new section that detects "Bounce flag", which blocks the approval of SpamCop reports until logging on the project page and manually cancel the lock
 - v2.8 - added two new sections to detect messages "Supposed receiving system not associated with any of your mailhosts" and "Mailhost configuration problem"
 - v2.7 - added debugging option (the write report on disk) and other minor improvements
