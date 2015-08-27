@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v2.9 (2015-05-26)
+# SpamCop.net - Automatic approval of spam reports v3.0 (2015-08-27)
 # Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.0 - changing the mode of action in the event of an "possible forgery" error - change the alert from an error to a warning that allows you to continue script working
 # v2.9 - added a new section that detects "Bounce flag", which blocks the approval of SpamCop reports until logging on the project page and manually cancel the lock
 # v2.8 - added two new sections to detect messages: "Supposed receiving system not associated with any of your mailhosts" and "Mailhost configuration problem"
 # v2.7 - added debugging option (the write report on disk) and other minor improvements
@@ -56,10 +57,11 @@ if (defined $foundLink) {
         sleep(3);
         $mech->get($mech->uri());
       }
+      if ($mech->content =~ /Possible.forgery/) {
+        print "!! Possible forgery. Supposed receiving system not associated with any of your mailhosts. See: ".$mech->uri()."\n";
+      }
       if ($mech->content =~ /resolved.this.issue/) {
         print "## ISP resolved this issue, no report needed. Skipping... (see ".$mech->uri().")\n";
-      } elsif ($mech->content =~ /Possible.forgery/) {
-        print "## Possible forgery. Supposed receiving system not associated with any of your mailhosts. See: ".$mech->uri()."\n";
       } elsif ($mech->content =~ /Mailhost.configuration.problem/) {
         print "## Mailhost configuration problem. Register every email address where you receive spam. See: ".$mech->uri()."\n";        
       } elsif ($mech->content =~ /No.source.IP.address.found/) {
@@ -78,7 +80,7 @@ if (defined $foundLink) {
         $mech->click_button( 'value' => 'Send Spam Report(s) Now' );
       } else {
         print "!! An unknown error occurred. Please try after some time. If the problem persists, report it to the spamcop.pl author.\n";
-        # debug
+        # debug - save report to file
         #$mech->save_content("error_report");
       }
     } else {
