@@ -1,4 +1,4 @@
-SpamCop.net - Automatic approval of SpamCop.net spam reports v3.0 (2015-08-27)
+SpamCop.net - Automatic approval of SpamCop.net spam reports v3.1 (2015-09-13)
 - Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 
 
@@ -54,6 +54,13 @@ NOTE!
 CHANGELOG
 =========
 
+- v3.1 - added information about individual e-mail address to which you should send reports of Spam
+       - change the presentation of a script (User Agent)
+       - added a new section "no routeable IP address"
+       - added a new section "Reports have already been sent"
+       - added a new section "No blank line delineating headers from body"
+       - added a new section "No valid email addresses"
+       - other minor cosmetic fixes
 - v3.0 - changing the mode of action in the event of an "possible forgery" error - change the alert from an error to a warning that allows you to continue script working
 - v2.9 - added a new section that detects "Bounce flag", which blocks the approval of SpamCop reports until logging on the project page and manually cancel the lock
 - v2.8 - added two new sections to detect messages "Supposed receiving system not associated with any of your mailhosts" and "Mailhost configuration problem"
