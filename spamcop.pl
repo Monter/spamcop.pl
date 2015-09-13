@@ -1,9 +1,16 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.0 (2015-08-27)
+# SpamCop.net - Automatic approval of spam reports v3.1 (2015-09-13)
 # Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.1 - added information about individual e-mail address to which you should send reports of Spam
+#      - change the presentation of a script (User Agent)
+#      - added a new section "no routeable IP address"
+#      - added a new section "Reports have already been sent"
+#      - added a new section "No blank line delineating headers from body"
+#      - added a new section "No valid email addresses"
+#      - other minor cosmetic fixes
 # v3.0 - changing the mode of action in the event of an "possible forgery" error - change the alert from an error to a warning that allows you to continue script working
 # v2.9 - added a new section that detects "Bounce flag", which blocks the approval of SpamCop reports until logging on the project page and manually cancel the lock
 # v2.8 - added two new sections to detect messages: "Supposed receiving system not associated with any of your mailhosts" and "Mailhost configuration problem"
@@ -31,8 +38,8 @@ $| = 1; # unbuffered output
 print "\n@@ ".strftime('%F %T',localtime)."\n";
 
 my $spamcop_url = 'http://www.spamcop.net';
-
-my $mech = WWW::Mechanize->new();
+my $user_agent = 'Auto commit SpamCop reports v3.1 (https://github.com/Monter/spamcop.pl)';
+my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
 die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless $mech->success;
 $mech->submit_form (
@@ -43,6 +50,11 @@ $mech->submit_form (
   }
 );
 die "!! Couldn't submit form. Exit.\n" unless $mech->success;
+
+my @emails = ($mech->content =~ /spam.to:.<a.href=\"mailto:(.*)\">/cgim);
+foreach my $email (@emails) {
+  print "-- Forward your spam to: " . $email . "\n";
+}
 
 my $foundLink = $mech->find_link( text => 'Report Now' );
 if (defined $foundLink) {
@@ -58,16 +70,25 @@ if (defined $foundLink) {
         $mech->get($mech->uri());
       }
       if ($mech->content =~ /Possible.forgery/) {
-        print "!! Possible forgery. Supposed receiving system not associated with any of your mailhosts. See: ".$mech->uri()."\n";
+        print "   ↴ Possible forgery. Supposed receiving system not associated with any of your mailhosts (see: ".$mech->uri().")\n";
       }
-      if ($mech->content =~ /resolved.this.issue/) {
+            if ($mech->content =~ /is.not.a.routeable.IP.address/) {
+        print "   ↴ Tracking / Parsing input - no routeable IP address (see ".$mech->uri().")\n";
+      }
+            if ($mech->content =~ /resolved.this.issue/) {
         print "## ISP resolved this issue, no report needed. Skipping... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /Mailhost.configuration.problem/) {
-        print "## Mailhost configuration problem. Register every email address where you receive spam. See: ".$mech->uri()."\n";
+        print "## Mailhost configuration problem. Register every email address where you receive spam (see: ".$mech->uri().")\n";
       } elsif ($mech->content =~ /No.source.IP.address.found/) {
         print "## No source IP address found, cannot proceed. Ignored... (see ".$mech->uri().")\n";
+      } elsif ($mech->content =~ /No.blank.line.delineating/) {
+        print "## No blank line delineating headers from body - abort... (see ".$mech->uri().")\n";
+      } elsif ($mech->content =~ /No.valid.email.addresses/) {
+        print "## No valid email addresses, sorry! (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /spam.have.already.been.sent/) {
-        print "## Reports regarding this spam have already been sent. Message is old, see: ".$mech->uri()."\n";
+        print "## Reports regarding this spam have already been sent. Message is old (see: ".$mech->uri().")\n";
+      } elsif ($mech->content =~ /Reports.have.already.been.sent/) {
+        print "## Reports have already been sent. Skipping...\n";
       } elsif ($mech->content =~ /this.email.is.too.old.to/) {
         print "## Sorry, this email is too old to file a spam report. You must report spam within 2 days of receipt. See: ".$mech->uri()."\n";
       } elsif ($mech->content =~ /No.body.text.provided/) {
