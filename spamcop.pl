@@ -72,10 +72,10 @@ if (defined $foundLink) {
       if ($mech->content =~ /Possible.forgery/) {
         print "   ↴ Possible forgery. Supposed receiving system not associated with any of your mailhosts (see: ".$mech->uri().")\n";
       }
-            if ($mech->content =~ /is.not.a.routeable.IP.address/) {
+      if ($mech->content =~ /is.not.a.routeable.IP.address/) {
         print "   ↴ Tracking / Parsing input - no routeable IP address (see ".$mech->uri().")\n";
       }
-            if ($mech->content =~ /resolved.this.issue/) {
+      if ($mech->content =~ /resolved.this.issue/) {
         print "## ISP resolved this issue, no report needed. Skipping... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /Mailhost.configuration.problem/) {
         print "## Mailhost configuration problem. Register every email address where you receive spam (see: ".$mech->uri().")\n";
