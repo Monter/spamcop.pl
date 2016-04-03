@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.1 (2015-09-13)
+# SpamCop.net - Automatic approval of spam reports v3.2 (2016-04-03)
 # Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.2 - improving the positioning of some messages and added a new section "SIP does not wish to receive reports"
 # v3.1 - added information about individual e-mail address to which you should send reports of Spam
 #      - change the presentation of a script (User Agent)
 #      - added a new section "no routeable IP address"
@@ -38,7 +39,7 @@ $| = 1; # unbuffered output
 print "\n@@ ".strftime('%F %T',localtime)."\n";
 
 my $spamcop_url = 'http://www.spamcop.net';
-my $user_agent = 'Auto commit SpamCop reports v3.1 (https://github.com/Monter/spamcop.pl)';
+my $user_agent = 'Auto commit SpamCop reports v3.2 (https://github.com/Monter/spamcop.pl)';
 my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
 die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless $mech->success;
@@ -69,12 +70,6 @@ if (defined $foundLink) {
         sleep(3);
         $mech->get($mech->uri());
       }
-      if ($mech->content =~ /Possible.forgery/) {
-        print "   ↴ Possible forgery. Supposed receiving system not associated with any of your mailhosts (see: ".$mech->uri().")\n";
-      }
-      if ($mech->content =~ /is.not.a.routeable.IP.address/) {
-        print "   ↴ Tracking / Parsing input - no routeable IP address (see ".$mech->uri().")\n";
-      }
       if ($mech->content =~ /resolved.this.issue/) {
         print "## ISP resolved this issue, no report needed. Skipping... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /Mailhost.configuration.problem/) {
@@ -98,11 +93,18 @@ if (defined $foundLink) {
       } elsif ($mech->content =~ /Send.Spam.Report/) {
         my $form = $mech->form_name( 'sendreport' );
         print "-> Send report: ".$mech->value('reports')." - see this report at: ".$mech->uri()."\n";
+        if ($mech->content =~ /Possible.forgery/) {
+          print "  \\-> Possible forgery. Supposed receiving system not associated with any of your mailhosts\n";
+        }
+        if ($mech->content =~ /is.not.a.routeable.IP.address/) {
+          print "  \\-> Tracking / Parsing input - no routeable IP address\n";
+        }
+        if ($mech->content =~ /ISP.does.not.wish.to.receive.reports.regarding/) {
+          print "  \\-> ISP does not wish to receive reports regarding ... (see ".$mech->uri().")\n";
+        }
         $mech->click_button( 'value' => 'Send Spam Report(s) Now' );
       } else {
         print "!! An unknown error occurred. Please try after some time. If the problem persists, report it to the spamcop.pl author.\n";
-        # debug - save report to file
-        #$mech->save_content("error_report");
       }
     } else {
       print ":: No more report(s) found. Done!\n";
