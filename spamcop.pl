@@ -4,7 +4,7 @@
 # Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
-# v3.2 - improving the positioning of some messages and added a new section "SIP does not wish to receive reports"
+# v3.2 - improving the positioning of some messages and added a new section "ISP does not wish to receive reports"
 # v3.1 - added information about individual e-mail address to which you should send reports of Spam
 #      - change the presentation of a script (User Agent)
 #      - added a new section "no routeable IP address"
