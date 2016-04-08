@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.2 (2016-04-03)
+# SpamCop.net - Automatic approval of spam reports v3.3 (2016-04-09)
 # Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.3 - add error handling or lack of valid login and password to log into SpamCOP
+#      - allowing working in quiet mode
 # v3.2 - improving the positioning of some messages and added a new section "ISP does not wish to receive reports"
 # v3.1 - added information about individual e-mail address to which you should send reports of Spam
 #      - change the presentation of a script (User Agent)
@@ -36,7 +38,6 @@ use POSIX qw/strftime/;
 use WWW::Mechanize;
 
 $| = 1; # unbuffered output
-print "\n@@ ".strftime('%F %T',localtime)."\n";
 
 my $spamcop_url = 'http://www.spamcop.net';
 my $user_agent = 'Auto commit SpamCop reports v3.2 (https://github.com/Monter/spamcop.pl)';
@@ -52,13 +53,20 @@ $mech->submit_form (
 );
 die "!! Couldn't submit form. Exit.\n" unless $mech->success;
 
-my @emails = ($mech->content =~ /spam.to:.<a.href=\"mailto:(.*)\">/cgim);
-foreach my $email (@emails) {
-  print "-- Forward your spam to: " . $email . "\n";
+if ($mech->content =~ /Login.failed/) {
+  print "\n@@ ".strftime('%F %T',localtime)."\n";
+  die "!! Login failed. Check your username, password, and try again. Also check whether the size of characters is correct.\n";
 }
 
 my $foundLink = $mech->find_link( text => 'Report Now' );
 if (defined $foundLink) {
+  print "\n@@ ".strftime('%F %T',localtime)."\n";
+
+  my @emails = ($mech->content =~ /spam.to:.<a.href=\"mailto:(.*)\">/cgim);
+  foreach my $email (@emails) {
+    print "-- Forward your spam to: " . $email . "\n";
+  }
+
   print ":: Report(s) found! Processing...\n";
   my $stop = 0;
   while(not $stop) {
@@ -111,6 +119,9 @@ if (defined $foundLink) {
       $stop = 1;
     }
   }
+# comment out or remove below lines if you expect quiet mode
 } else {
+  print "\n@@ ".strftime('%F %T',localtime)."\n";
   die ":: No report(s) found. Exit.\n";
+# comment out or remove above lines if you expect quiet mode
 }
