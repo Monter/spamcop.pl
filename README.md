@@ -1,4 +1,4 @@
-SpamCop.net - Automatic approval of SpamCop.net spam reports v3.2 (2016-04-03)
+SpamCop.net - Automatic approval of SpamCop.net spam reports v3.3 (2016-04-09)
 - Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
 
 
@@ -53,6 +53,8 @@ NOTE!
 
 CHANGELOG
 =========
+- v3.3 - add error handling or lack of valid login and password to log into SpamCOP
+       - allowing working in quiet mode
 - v3.2 - improving the positioning of some messages and added a new section "ISP does not wish to receive reports"
 - v3.1 - added information about individual e-mail address to which you should send reports of Spam
        - change the presentation of a script (User Agent)
