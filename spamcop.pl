@@ -100,7 +100,7 @@ if (defined $foundLink) {
         print "!! Your email address has returned a bounce. Visit ".$spamcop_url." to resolve this problem and reset bounce flag. Accepting of reports has been stopped until the clarification of the matter.\n";
       } elsif ($mech->content =~ /Send.Spam.Report/) {
         my $form = $mech->form_name( 'sendreport' );
-        print "-> Send report: ".$mech->value('reports')." - see this report at: ".$mech->uri()."\n";
+        print "-> Sent report: ".$mech->value('reports')." - see this report at: ".$mech->uri()."\n";
         if ($mech->content =~ /Possible.forgery/) {
           print "  \\-> Possible forgery. Supposed receiving system not associated with any of your mailhosts\n";
         }
