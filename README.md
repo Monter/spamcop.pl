@@ -1,5 +1,5 @@
 SpamCop.net - Automatic approval of SpamCop.net spam reports v3.3 (2016-04-09)
-- Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
+- Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 
 
 README
