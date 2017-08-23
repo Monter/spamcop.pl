@@ -13,7 +13,7 @@ Was tested on Perl version 5.10.1, 5.14.2 and 5.20.2
 Action script in a nutshell replaces the user and the browser simulating the appropriate action on the Web sites visited by reading the content of these pages and clicking the appropriate buttons.
 
 Spamcop.pl in action:
-<img src="http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/.screenshot.png">
+<img src="https://raw.githubusercontent.com/Monter/spamcop.pl/master/screenshot.png">
 
 To be able to use this script You must have an with Spamcop.net account. Website Spamcop.net is conducted by Cisco and enables IT administrators to report and/or guardians of networks and servers, incidents of sending users their machines / network unsolicited junk mail or viruses. Use of Spamcop.net is free.
 
