@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.3 (2016-04-09)
-# Written by Monter - http://monter.techlog.pl/files/download/_Projects/Linux/spamcop/
+# SpamCop.net - Automatic approval of spam reports v3.4 (2018-06-20)
+# Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.4 - adding support for two SpamCOP server errors
+#      - updated project homepage URL
 # v3.3 - add error handling or lack of valid login and password to log into SpamCOP
 #      - allowing working in quiet mode
 # v3.2 - improving the positioning of some messages and added a new section "ISP does not wish to receive reports"
@@ -30,7 +32,7 @@
 # v2   - added support for advertising appearing in random moments ("Please wait - subscribe to remove this delay...")
 # v1   - initial basic version
 #
-# Bug reports and suggestions for improvements send an email monter[at]techlog.pl
+# Bug reports and suggestions for improvements send me by e-mail to monter [at] techlog.pl or add a report via issues
 
 use strict;
 use warnings;
@@ -40,7 +42,7 @@ use WWW::Mechanize;
 $| = 1; # unbuffered output
 
 my $spamcop_url = 'https://www.spamcop.net';
-my $user_agent = 'Auto commit SpamCop reports v3.3 (https://github.com/Monter/spamcop.pl)';
+my $user_agent = 'Auto commit SpamCop reports v3.4 (https://github.com/Monter/spamcop.pl)';
 my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
 die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless $mech->success;
@@ -56,6 +58,16 @@ die "!! Couldn't submit form. Exit.\n" unless $mech->success;
 if ($mech->content =~ /Login.failed/) {
   print "\n@@ ".strftime('%F %T',localtime)."\n";
   die "!! Login failed. Check your username, password, and try again. Also check whether the size of characters is correct.\n";
+}
+
+if ($mech->content =~ /an.error.occurred.while.processing.this.directive/) {
+  print "\n@@ ".strftime('%F %T',localtime)."\n";
+  die "!! [an error occurred while processing this directive] - SpamCOP server problem - please re-try the operation in a minute or two.\n";
+}
+
+if ($mech->content =~ /500.Internal.Server.Error/) {
+  print "\n@@ ".strftime('%F %T',localtime)."\n";
+  die "!! 500 Internal Server Error - Please re-try the operation which caused this error in a minute or two.\n";
 }
 
 my $foundLink = $mech->find_link( text => 'Report Now' );
