@@ -39,7 +39,7 @@ use WWW::Mechanize;
 
 $| = 1; # unbuffered output
 
-my $spamcop_url = 'http://www.spamcop.net';
+my $spamcop_url = 'https://www.spamcop.net';
 my $user_agent = 'Auto commit SpamCop reports v3.2 (https://github.com/Monter/spamcop.pl)';
 my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
