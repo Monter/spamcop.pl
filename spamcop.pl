@@ -5,6 +5,7 @@
 #                     https://github.com/Monter/spamcop.pl
 #
 # v3.4 - adding support for two SpamCOP server errors
+#      - change SpamCOP URL to https
 #      - updated project homepage URL
 # v3.3 - add error handling or lack of valid login and password to log into SpamCOP
 #      - allowing working in quiet mode
