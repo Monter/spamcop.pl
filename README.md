@@ -1,4 +1,4 @@
-SpamCop.net - Automatic approval of SpamCop.net spam reports v3.4 (2018-06-20)
+SpamCop.net - Automatic approval of SpamCop.net spam reports v3.5 (2019-06-09)
 - Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 
 
