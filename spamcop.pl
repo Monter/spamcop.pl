@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.4 (2018-06-20)
+# SpamCop.net - Automatic approval of spam reports v3.5 (2019-06-09)
 # Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.5 - added a new section "Failed to load spam header"
 # v3.4 - adding support for two SpamCOP server errors
 #      - change SpamCOP URL to https
 #      - updated project homepage URL
@@ -111,6 +112,8 @@ if (defined $foundLink) {
         print "## No body text provided, check format of submission. Spam must have body text. See: ".$mech->uri()."\n";
       } elsif ($mech->content =~ /Bounce.error/) {
         print "!! Your email address has returned a bounce. Visit ".$spamcop_url." to resolve this problem and reset bounce flag. Accepting of reports has been stopped until the clarification of the matter.\n";
+      } elsif ($mech->content =~ /Failed.to.load.spam.header/) {
+        print "!! Failed to load spam header - abort... (see ".$mech->uri().")\n";
       } elsif ($mech->content =~ /Send.Spam.Report/) {
         my $form = $mech->form_name( 'sendreport' );
         print "-> Sent report: ".$mech->value('reports')." - see this report at: ".$mech->uri()."\n";
