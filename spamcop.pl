@@ -44,7 +44,7 @@ use WWW::Mechanize;
 $| = 1; # unbuffered output
 
 my $spamcop_url = 'https://www.spamcop.net';
-my $user_agent = 'Auto commit SpamCop reports v3.4 (https://github.com/Monter/spamcop.pl)';
+my $user_agent = 'Auto commit SpamCop reports v3.5 (https://github.com/Monter/spamcop.pl)';
 my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
 die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless $mech->success;
