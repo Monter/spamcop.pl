@@ -33,10 +33,11 @@ NOTE!
 HOW TO INSTALL
 ==============
 
-The script requires the Perl environment to work with the module WWW:Mechanize. Script does not require installation, it must be only edited after downloading and in the right place to enter your login details to Spamcop.net.
+The script requires the Perl environment to work with the module WWW:Mechanize. Script does not require installation.
+
 - download the script and save it to disk
 - give him the right to do (chmod + x)
-- Edit the script and in the right places to give your username and password to the Spamcop.net site.
+- Run the script providing the `USERNAME` and `PASSWORD` environment variables. These are the credentials of you Spamcop.net account.
  
 To use the script, you must have a user account on the site and send e-mails Spamcop.net qualified by you as Spam in the form of attachments to the given Spamcop your individual email address.
 
