@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.5 (2019-06-09)
+# SpamCop.net - Automatic approval of spam reports v3.6 (2020-08-04)
 # Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
+# v3.6 - a new "Too many links" message has been added when the reported spam contains too many links
 # v3.5 - added a new section "Failed to load spam header"
 # v3.4 - adding support for two SpamCOP server errors
 #      - change SpamCOP URL to https
@@ -44,7 +45,7 @@ use WWW::Mechanize;
 $| = 1; # unbuffered output
 
 my $spamcop_url = 'https://www.spamcop.net';
-my $user_agent = 'Auto commit SpamCop reports v3.5 (https://github.com/Monter/spamcop.pl)';
+my $user_agent = 'Auto commit SpamCop reports v3.6 (https://github.com/Monter/spamcop.pl)';
 my $mech = WWW::Mechanize->new( agent => $user_agent );
 $mech->get( $spamcop_url );
 die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless $mech->success;
@@ -125,6 +126,9 @@ if (defined $foundLink) {
         }
         if ($mech->content =~ /ISP.does.not.wish.to.receive.reports.regarding/) {
           print "  \\-> ISP does not wish to receive reports regarding ... (see ".$mech->uri().")\n";
+        }
+        if ($mech->content =~ /Too.many.links/) {
+          print "  \\-> The reported spam contains a lot of links\n";
         }
         $mech->click_button( 'value' => 'Send Spam Report(s) Now' );
       } else {
