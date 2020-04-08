@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# SpamCop.net - Automatic approval of spam reports v3.6 (2020-08-04)
+# SpamCop.net - Automatic approval of spam reports v3.6 (2020-04-08)
 # Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
 #                     https://github.com/Monter/spamcop.pl
 #
