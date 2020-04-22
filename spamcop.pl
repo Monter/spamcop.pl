@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # SpamCop.net - Automatic approval of spam reports v3.6 (2020-04-08)
 # Written by Monter - https://dev.techlog.pl/projects/Linux/spamcop/
@@ -52,8 +52,8 @@ die "!! Can't even get the SpamCop page: ", $mech->response->status_line unless 
 $mech->submit_form (
   form_number => 1,
   fields      => {
-    username    => 'YOUR_SPAMCOP_LOGIN',
-    password    => 'YOUR_SPAMCOP_PASSWORD',
+    username    => $ENV{'USERNAME'},
+    password    => $ENV{'PASSWORD'},
   }
 );
 die "!! Couldn't submit form. Exit.\n" unless $mech->success;
